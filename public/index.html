@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChessMate – Premium Chess</title>
+  <meta name="description" content="Play chess online – single player vs AI or multiplayer with friends. Premium chess experience." />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/lobby.css" />
+</head>
+<body>
+
+  <!-- Animated background -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-overlay"></div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="app-wrapper" id="appWrapper">
+
+    <!-- SCREEN 1: HOME -->
+    <section class="screen active" id="screenHome">
+
+      <header class="site-header">
+        <div class="logo-group">
+          <span class="logo-crown">&#9819;</span>
+          <span class="logo-text">Chess<span class="logo-accent">Mate</span></span>
+        </div>
+        <div class="header-badge">Premium Edition</div>
+      </header>
+
+      <div class="hero">
+        <p class="hero-eyebrow">Welcome to the Board</p>
+        <h1 class="hero-title">Choose Your<br><span class="gradient-text">Battle Mode</span></h1>
+        <p class="hero-sub">Master the game alone or dominate with friends</p>
+      </div>
+
+      <div class="mode-grid">
+
+        <!-- Self Play Card -->
+        <button class="mode-card mode-card--selfplay" id="btnSelfPlay" onclick="window.location.href='game.html?mode=self-play'">
+          <div class="card-glow card-glow--purple"></div>
+          <div class="card-inner">
+            <div class="card-badge">Me vs Me</div>
+            <div class="card-icon-wrap card-icon-wrap--purple">
+              <span class="card-icon">♟️</span>
+            </div>
+            <h2 class="card-title">Self Play</h2>
+            <p class="card-desc">Me vs Me — Control both White and Black manually. Practice openings, analyze tactics, no second player and NO AI.</p>
+            <div class="card-tags">
+              <span class="tag tag--purple">Both Sides</span>
+              <span class="tag tag--purple">Manual</span>
+              <span class="tag tag--purple">Undo</span>
+            </div>
+            <div class="card-cta card-cta--purple">
+              Start Self Play &rarr;
+            </div>
+          </div>
+        </button>
+
+        <!-- Single Player Card -->
+        <button class="mode-card" id="btnSinglePlayer" onclick="goTo('screenSingle')">
+          <div class="card-glow card-glow--blue"></div>
+          <div class="card-inner">
+            <div class="card-badge">Solo</div>
+            <div class="card-icon-wrap card-icon-wrap--blue">
+              <span class="card-icon">&#129302;</span>
+            </div>
+            <h2 class="card-title">Single Player</h2>
+            <p class="card-desc">Challenge our AI engine with 3 difficulty levels. Train your tactics and sharpen your endgame.</p>
+            <div class="card-tags">
+              <span class="tag">Easy</span>
+              <span class="tag">Medium</span>
+              <span class="tag">Hard</span>
+            </div>
+            <div class="card-cta">
+              Play vs AI &rarr;
+            </div>
+          </div>
+        </button>
+
+        <!-- Multiplayer Card -->
+        <button class="mode-card mode-card--featured" id="btnMultiplayer" onclick="goTo('screenMulti')">
+          <div class="card-glow card-glow--gold"></div>
+          <div class="hot-badge">&#128293; Popular</div>
+          <div class="card-inner">
+            <div class="card-badge">Online</div>
+            <div class="card-icon-wrap card-icon-wrap--gold">
+              <span class="card-icon">&#128101;</span>
+            </div>
+            <h2 class="card-title">Multiplayer</h2>
+            <p class="card-desc">Challenge your friends or find random opponents worldwide. Real-time battles with live chat.</p>
+            <div class="card-tags">
+              <span class="tag tag--gold">Friends</span>
+              <span class="tag tag--gold">Random</span>
+              <span class="tag tag--gold">Live</span>
+            </div>
+            <div class="card-cta card-cta--gold">
+              Play Online &rarr;
+            </div>
+          </div>
+        </button>
+
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-lbl">AI Levels</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">Live</span>
+          <span class="stat-lbl">Multiplayer</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">10m</span>
+          <span class="stat-lbl">Clock Timer</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">Free</span>
+          <span class="stat-lbl">Forever</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SCREEN 2A: SINGLE PLAYER -->
+    <section class="screen" id="screenSingle">
+
+      <div class="screen-header">
+        <button class="back-btn" onclick="goTo('screenHome')">&larr; Back</button>
+        <div class="screen-title-group">
+          <span class="screen-icon">&#129302;</span>
+          <h2 class="screen-title">VS Computer</h2>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card__glow"></div>
+
+        <div class="field-group">
+          <label class="field-label">Your Name</label>
+          <div class="input-wrap">
+            <span class="input-icon">&#9823;</span>
+            <input type="text" id="cpuPlayerName" class="field-input" placeholder="Enter your name..." maxlength="20" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Difficulty Level</label>
+          <div class="diff-grid">
+            <button class="diff-card active" data-level="easy" onclick="selectDiff(this)">
+              <span class="diff-icon">&#127807;</span>
+              <span class="diff-name">Easy</span>
+              <span class="diff-desc">For beginners</span>
+            </button>
+            <button class="diff-card" data-level="medium" onclick="selectDiff(this)">
+              <span class="diff-icon">&#9876;&#65039;</span>
+              <span class="diff-name">Medium</span>
+              <span class="diff-desc">Balanced challenge</span>
+            </button>
+            <button class="diff-card" data-level="hard" onclick="selectDiff(this)">
+              <span class="diff-icon">&#128128;</span>
+              <span class="diff-name">Hard</span>
+              <span class="diff-desc">Expert AI engine</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="play-btn play-btn--blue" id="playCpuBtn">
+          <span>&#9654; Start Game</span>
+        </button>
+
+        <p id="cpuMsg" class="form-message"></p>
+      </div>
+
+    </section>
+
+    <!-- SCREEN 2B: MULTIPLAYER HUB -->
+    <section class="screen" id="screenMulti">
+
+      <div class="screen-header">
+        <button class="back-btn" onclick="goTo('screenHome')">&larr; Back</button>
+        <div class="screen-title-group">
+          <span class="screen-icon">&#128101;</span>
+          <h2 class="screen-title">Multiplayer</h2>
+        </div>
+      </div>
+
+      <div class="multi-name-bar">
+        <div class="input-wrap" style="max-width:340px;width:100%;">
+          <span class="input-icon">&#9823;</span>
+          <input type="text" id="multiPlayerName" class="field-input" placeholder="Your name..." maxlength="20" />
+        </div>
+      </div>
+
+      <div class="multi-options">
+
+        <!-- LEFT: Invite Friend via Code -->
+        <div class="multi-card" id="cardInvite">
+          <div class="multi-card__badge">Private Room</div>
+          <div class="multi-card__icon">&#128274;</div>
+          <h3 class="multi-card__title">Play with Friend</h3>
+          <p class="multi-card__desc">Create a private room and share the invite code with your friend</p>
+
+          <button class="play-btn play-btn--gold" id="createRoomBtn" style="margin-bottom:1rem;">
+            <span>&#10133; Create Room</span>
+          </button>
+
+          <div id="roomCreatedBox" class="room-created-box" style="display:none;">
+            <p class="room-created-label">Share this code with your friend:</p>
+            <div class="room-code-display">
+              <span id="roomCodeShow" class="room-code-text"></span>
+              <button class="copy-btn" onclick="copyCode()" id="copyBtn">&#128203; Copy</button>
+            </div>
+            <div class="waiting-pulse">
+              <div class="pulse-dot"></div>
+              <span>Waiting for friend to join...</span>
+            </div>
+          </div>
+
+          <div class="divider"><span>OR JOIN WITH CODE</span></div>
+
+          <div class="join-code-row">
+            <input type="text" id="joinCodeInput" class="field-input code-input" placeholder="Enter Room Code" maxlength="6" />
+            <button class="join-btn" id="joinRoomBtn">Join &rarr;</button>
+          </div>
+
+          <p id="inviteMsg" class="form-message"></p>
+        </div>
+
+        <!-- RIGHT: Friend List -->
+        <div class="multi-card" id="cardFriends">
+          <div class="multi-card__badge multi-card__badge--purple">Friend List</div>
+          <div class="multi-card__icon">&#128203;</div>
+          <h3 class="multi-card__title">Your Friends</h3>
+          <p class="multi-card__desc">Add friends to your list and challenge them instantly when a room is open</p>
+
+          <div class="add-friend-row">
+            <input type="text" id="addFriendInput" class="field-input" placeholder="Friend's name..." maxlength="20" />
+            <button class="add-friend-btn" onclick="addFriend()">+ Add</button>
+          </div>
+
+          <div class="friend-list" id="friendList">
+            <div class="friend-empty" id="friendEmpty">
+              <span>&#128101;</span>
+              <p>No friends yet. Add some above!</p>
+            </div>
+          </div>
+
+          <p id="friendMsg" class="form-message"></p>
+        </div>
+
+      </div>
+
+      <!-- Random Match Bar -->
+      <div class="random-match-bar">
+        <div class="random-info">
+          <span class="random-icon">&#127758;</span>
+          <div>
+            <p class="random-title">VS Random Player</p>
+            <p class="random-sub">Get matched with a random player worldwide</p>
+          </div>
+        </div>
+        <button class="random-btn" id="findMatchBtn">
+          <span id="findMatchText">Find Match</span>
+          <div id="findMatchSpinner" class="mini-spinner" style="display:none;"></div>
+        </button>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- GLOBAL TOAST -->
+  <div id="globalToast" class="global-toast"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/lobby.js"></script>
+</body>
+</html>
