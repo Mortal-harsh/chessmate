@@ -10,6 +10,12 @@
 
 ---
 
+## 📊 Project Presentation (PPT)
+* 📥 **Download Presentation Deck:** [**ChessMate_PRO_Presentation.pptx**](ChessMate_PRO_Presentation.pptx)
+* **Deck Structure:** 14 High-Impact Slides covering Project Vision, Architecture, Minimax AI Engine, Tactical Coach, Danger Radar, Multiplayer Features, and Future Roadmap.
+
+---
+
 ## 🚀 Key Features
 
 ### 🎮 Game Modes
